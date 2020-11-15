@@ -16,3 +16,5 @@ Comic books are generally written by men, for men and are about men. With few fe
 * [Angeline Vidhula Jeyachandra](https://www.linkedin.com/in/angelinevjeyachandra/)
 * [Prathiksha Dayananda Shetty](https://www.linkedin.com/in/prathiksha-shetty-d95/)
 * [Beno Jeya Savarimuthu](https://www.linkedin.com/in/benojeya/)
+
+Wordle courtesy of Jason Davies' Word Cloud Plugin found [here](https://github.com/jasondavies/d3-cloud)

@@ -1,0 +1,33 @@
+.flex_container {
+    display: flex;
+}
+.flex_containerChild {
+    margin: 10px;
+    padding: 20px;
+}
+line.between {
+    stroke: #888;
+    stroke-dasharray: 4px 4px;
+    stroke-width: 0.5px;
+}
+
+line.hBar {
+    stroke: #888;
+    stroke-dasharray: 4px 4px;
+    stroke-width: 0.5px;
+}
+
+.tick line {
+    stroke-dasharray: 4px 4px;
+    stroke: #ccc;
+}
+
+path.domain {
+    display: none;
+}
+
+#stackedBar_time line.between {
+    stroke-dasharray: 2px 2px;
+    stroke: #ccc;
+    stroke-width: 3px;
+}

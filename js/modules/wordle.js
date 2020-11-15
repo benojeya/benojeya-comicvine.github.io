@@ -1,10 +1,7 @@
 export const name = 'wordle';
 
-
-
-export function wordle(data) {
+export function wordle(data, w, h) {
 	let wordle_div = document.createDocumentFragment();
-    //var fill = d3.scale.category20();
 	// set the dimensions and margins of the graph
 	var margin = {
 			top: 10,
@@ -12,8 +9,8 @@ export function wordle(data) {
 			bottom: 10,
 			left: 10
 		},
-		width = 1200 - margin.left - margin.right,
-		height = 500 - margin.top - margin.bottom;
+		width = w - margin.left - margin.right,
+		height = h - margin.top - margin.bottom;
 
 	// append the svg object 
 	var svg = d3.select(wordle_div).append("svg")
@@ -24,13 +21,7 @@ export function wordle(data) {
 
 	var layout = d3.layout.cloud()
 		.size([width, height])
-		.words(data.map(function(d) {
-			return {
-                text: d.gen_name,
-                size: d.count,
-                gender: d.gender
-			};
-        }))
+		.words(data)
         .rotate(function(d) { return 0; })
         .font("Impact") 
         .text(function(d) { return d.text; })
