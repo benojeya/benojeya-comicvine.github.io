@@ -7,37 +7,6 @@ export function stackedBar(data) {
         width = 1000 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
-
-    // let subgroups = data.columns.slice(12)
-
-    // let groups = d3.map(data, function(d){return(d.year)}).keys();
-
-    // console.log(subgroups);
-    // console.log(groups)
-    
-    // //let g = d3.group(data, d => d.year)
-    // let categoryMale = d3.rollup(data, v=> {
-    //     let c = 0;
-    //     v.forEach(function (character) {
-    //         if(character.sex.toLowerCase() == "male characters") c++;
-    //     })
-    //     return c;
-    // }, d => d.year);
-    // let categoryFemale = d3.rollup(data, v=> {
-    //     let c = 0;
-    //     v.forEach(function (character) {
-    //         if(character.sex.toLowerCase() == "female characters") c++;
-    //     })
-    //     return c;
-    // }, d => d.year);
-
-    // let data_group = new Map();
-    // let table = "<table>"
-    // data_group = categoryFemale.forEach(function (m, k) {
-    //     table = table + "<tr><td>" + k + "</td><td>" + m + "</td></tr>";
-    // });
-    // table += "</table>"
-    // document.getElementById("table").innerHTML = table;
     let svg = d3.select(stackedBar_div)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -76,7 +45,7 @@ export function stackedBar(data) {
 
                 .attr("transform", function(d) { return "translate(" + x(d.Range) + ",0)"; })
                 .selectAll("circle")
-                .data(function(d) {console.log(d); return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
+                .data(function(d) {return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
                 .enter().append("circle")
                 .attr("class", "genDot")
                 .attr("r", 7)

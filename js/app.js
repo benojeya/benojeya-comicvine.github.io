@@ -3,6 +3,7 @@ import { funnel } from './modules/funnel.js';
 //import { hBar } from './modules/hBar.js';
 import { hBar } from './modules/hBar-funnel.js';
 import { stackedBar } from './modules/stackedBar.js'
+import { brushing } from './modules/brushing.js';
 
 
 d3.csv('assets/data/gendered_names.csv').then(function (data) {
@@ -56,7 +57,23 @@ d3.csv('assets/data/gendered_powers.csv').then(function (data) {
 
 d3.csv('assets/data/gendered_year_range_marvel.csv').then(function (data) {
     // stacked bar chart for year of appearance
-    let stackedBar_time = stackedBar(data);
-    document.getElementById("stackedBar_time").appendChild(stackedBar_time);
+    let hBar_genderedPowers_range_marvel = stackedBar(data);
+    document.getElementById("hBar_genderedPowers_range_dc").appendChild(hBar_genderedPowers_range_marvel);
+});
+d3.csv('assets/data/gendered_year_range_dc.csv').then(function (data) {
+    // stacked bar chart for year of appearance
+    let hBar_genderedPowers_range_dc = stackedBar(data);
+    document.getElementById("hBar_genderedPowers_range_marvel").appendChild(hBar_genderedPowers_range_dc);
+});
+
+
+d3.csv('assets/data/gendered_year_dc.csv').then(function (data) {
+    let brushing_genderedPowers_dc = brushing(data);
+    document.getElementById("brushing_genderedPowers_dc").appendChild(brushing_genderedPowers_dc);
+});
+
+d3.csv('assets/data/gendered_year_marvel.csv').then(function (data) {
+    let brushing_genderedPowers_marvel = brushing(data);
+    document.getElementById("brushing_genderedPowers_marvel").appendChild(brushing_genderedPowers_marvel);
 });
 
