@@ -476,8 +476,8 @@ p.color--male{
     padding: 0 0 1em;
 }
 #page12 {
-    height: 330%;
-    min-height: 2340px;
+    height: 370%;
+    min-height: 2500px;
 }
 .page h4 {
     margin-top: 1em;
@@ -503,8 +503,7 @@ p.color--male{
 }
 
 #page12 .options h5 {
-    font-size: 1.8em;
-    text-align: left;
+    font-size: 4em;
     width: 90%;
     margin: 1em auto;
 }
@@ -546,4 +545,9 @@ p.color--male{
 }
 #male.active .legend{
     background-color: #1357BE;
+}
+.gImg {
+    width: 50%;
+    display: block;
+    margin: 2em auto 1em;
 }

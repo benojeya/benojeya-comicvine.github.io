@@ -6,11 +6,11 @@ export function brushing(data) {
 
     let margin = {top: 10, right: 40, bottom: 50, left: 60},
         width = 1110 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        height = 430 - margin.top - margin.bottom;
 
     let margin2 = {top: 20, right: 40, bottom: 10, left: 50},
         width2 = 1100 - margin2.left - margin2.right,
-        height2 = 120 - margin2.top - margin2.bottom;
+        height2 = 95 - margin2.top - margin2.bottom;
         
     let svg = d3.select(brushed_div)
         .append("svg")
