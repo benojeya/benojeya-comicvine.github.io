@@ -116,5 +116,65 @@ export function stackedBar(data, appFn) {
     //     div: stackedBar_div,
     //     bars: bars
     // };
-    return stackedBar_div
+    let filtered = []
+    // function updateKeys(d) {
+    //     var newKeys = [];
+    //     keys.forEach(function(d) {
+    //       if (filtered.indexOf(d) == -1 ) {
+    //         newKeys.push(d);
+    //       }
+    //     })
+    //     x1.domain(newKeys).rangeRound([0, x0.bandwidth()]);
+    //     y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { if (filtered.indexOf(key) == -1) return d[key]; }); })]);
+    //     svg.select(".y")
+    //         .transition()
+    //         .call(d3.axisLeft(y).ticks(null, "s"))
+    //         .duration(500);
+     
+    //     var bars = svg.selectAll(".bar").selectAll("rect")
+    //       .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
+        
+    //     bars.filter(function(d) {
+    //             return filtered.indexOf(d.key) > -1;
+    //         })
+    //         .transition()
+    //         .attr("x", function(d) {
+    //             return (+d3.select(this).attr("x")) + (+d3.select(this).attr("width"))/2;  
+    //         })
+    //         .attr("height",0)
+    //         .attr("width",0)     
+    //         .attr("y", function(d) { return height; })
+    //         .duration(500);
+   
+    //     bars.filter(function(d) {
+    //         return filtered.indexOf(d.key) == -1;
+    //       })
+    //         .transition()
+    //         .attr("x", function(d) { return x1(d.key); })
+    //         .attr("y", function(d) { return y(d.value); })
+    //         .attr("height", function(d) { return height - y(d.value); })
+    //         .attr("width", x1.bandwidth())
+    //         .attr("fill", function(d) { return z(d.key); })
+    //         .duration(500);
+ 
+    //     legend.selectAll("rect")
+    //         .transition()
+    //         .attr("fill",function(d) {
+    //             if (filtered.length) {
+    //             if (filtered.indexOf(d) == -1) {
+    //                 return z(d); 
+    //             }
+    //             else {
+    //                 return "white"; 
+    //             }
+    //             }
+    //             else {
+    //             return z(d); 
+    //             }
+    //         })
+    //         .duration(100);     
+    // } 
+    return {
+        div: stackedBar_div
+    }
 }

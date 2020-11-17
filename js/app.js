@@ -324,7 +324,7 @@ d3.csv('assets/data/gendered_year_range_marvel.csv').then(function (data) {
                 rangeEnd: e
             })
         });
-        document.getElementById("hBar_genderedPowers_range_marvel").appendChild(hBar_genderedPowers_range_marvel);
+        document.getElementById("hBar_genderedPowers_range_marvel").appendChild(hBar_genderedPowers_range_marvel.div);
 
     
         brushing_genderedPowers_marvel = brushing(sdata);
@@ -340,11 +340,12 @@ d3.csv('assets/data/gendered_year_range_dc.csv').then(function (data) {
                 rangeEnd: e
             })
         });
-        document.getElementById("hBar_genderedPowers_range_dc").appendChild(hBar_genderedPowers_range_dc);
+        document.getElementById("hBar_genderedPowers_range_dc").appendChild(hBar_genderedPowers_range_dc.div);
 
         brushing_genderedPowers_dc = brushing(sdata);
         document.getElementById("brushing_genderedPowers_dc").appendChild(brushing_genderedPowers_dc.div);
-        
+        // brushing_genderedPowers_dc.updateKeys("Male")
+        // hBar_genderedPowers_range_dc.updateKeys("Male")
     });
 });
 

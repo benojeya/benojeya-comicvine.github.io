@@ -115,13 +115,13 @@ export function hBar(data) {
         .attr("y2", function(d){
             return y0(d.category) + categoryG.get(d.category)(d.power);
         })
-        .on('mouseover', function(d) {
+        .on('mouseover', function(e, d) {
             var section = d3.select(this);
             section.style("opacity", 0.6)
             d3.select('#tooltip')
-                .style("left", (d3.event.pageX + 5) + "px")
-                .style("top", (d3.event.pageY - 28) + "px")
-                .html("<p class='difference'>Difference: " + Math.abs(d.diff).toFixed(2) + "</p><p class='gender'><span>Males:</span> <span class='number'>" + Math.abs(d.per_males).toFixed(2) + "%</span></p><p class='gender'><span>Females:</span> <span class='number'>" + Math.abs(d.per_females).toFixed(2) + "%</span></p>");
+                .style("left", (e.pageX + 5) + "px")
+                .style("top", (e.pageY - 28) + "px")
+                .html("<p class='diff_bold'>Difference: </p><p class='difference'>" + Math.abs(parseFloat(d.diff)).toFixed(1) + "%</p><p class='diff_bold'>Males: </p><p class='difference'>" + Math.abs(parseFloat(d.per_males)).toFixed(1) + "%</p><p class='diff_bold'>Females: </p><p class='difference'>" + Math.abs(parseFloat(d.per_females)).toFixed(1) + "%</p>");
             d3.select('#tooltip').classed('hidden', false);
         })
         .on("click", function(d) {
@@ -174,7 +174,7 @@ export function hBar(data) {
             d3.select('#tooltip')
                 .style("left", (e.pageX + 5) + "px")
                 .style("top", (e.pageY - 28) + "px")
-                .html("<p class='diff_bold'>Difference: </p><p class='difference'>" + Math.abs(parseFloat(d.perdiffMF)).toFixed(1) + "%</p><p class='diff_bold'>Males: </p><p class='difference'>" + Math.abs(parseFloat(d.perdiffMF)).toFixed(1) + "%</p><p class='diff_bold'>Females: </p><p class='difference'>" + Math.abs(parseFloat(d.perdiffMF)).toFixed(1) + "%</p>");
+                .html("<p class='diff_bold'>Difference: </p><p class='difference'>" + Math.abs(parseFloat(d.diff)).toFixed(1) + "%</p><p class='diff_bold'>Males: </p><p class='difference'>" + Math.abs(parseFloat(d.per_males)).toFixed(1) + "%</p><p class='diff_bold'>Females: </p><p class='difference'>" + Math.abs(parseFloat(d.per_females)).toFixed(1) + "%</p>");
             d3.select('#tooltip').classed('hidden', false);
         })
         .on("click", function(e, d) {
