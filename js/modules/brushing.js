@@ -129,20 +129,20 @@ export function brushing(data) {
         .enter().append("g")
         .attr("transform", function(d, i) { return "translate(30," + i * 20 + ")"; });
         
-    legend.append("rect")
-        .attr("x", width - 17)
-        .attr("width", 15)
-        .attr("height", 15)
-        .attr("fill", z)
-        .attr("stroke", z)
-        .attr("stroke-width",2)
-        .on("click",function(e, d) {updateKeys(d) });
+    // legend.append("rect")
+    //     .attr("x", width - 17)
+    //     .attr("width", 15)
+    //     .attr("height", 15)
+    //     .attr("fill", z)
+    //     .attr("stroke", z)
+    //     .attr("stroke-width",2)
+    //     .on("click",function(e, d) {updateKeys(d) });
   
-    legend.append("text")
-        .attr("x", width - 24)
-        .attr("y", 9.5)
-        .attr("dy", "0.32em")
-        .text(function(d) { return d; });
+    // legend.append("text")
+    //     .attr("x", width - 24)
+    //     .attr("y", 9.5)
+    //     .attr("dy", "0.32em")
+    //     .text(function(d) { return d; });
 
     var filtered = [];
 
@@ -234,7 +234,6 @@ export function brushing(data) {
                     }
                 });
         }
-        console.log(selected)
         nData = nData.filter(function (v, k) {
             return (selected.indexOf(v.Year) != -1) ;
         });
@@ -315,6 +314,7 @@ export function brushing(data) {
     }
     return {
         div: brushed_div,
-        brushend: brushend
+        brushend: brushend,
+        updateKeys: updateKeys
     };
 }

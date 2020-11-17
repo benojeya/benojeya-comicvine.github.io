@@ -8,6 +8,10 @@ var curPage = 1,
     wordle_genderedNames,
     wordle_maleNames,
     wordle_femaleNames;
+let keys = {
+    male: true,
+    female: true
+}
 
 function init () {
     d3.csv('assets/data/gendered_names.csv').then(function (data) {
@@ -343,3 +347,34 @@ d3.csv('assets/data/gendered_year_range_dc.csv').then(function (data) {
         
     });
 });
+
+d3.select("#male").on("click", function () {
+    if(keys.male)   {
+        d3.select("#male").classed("active", false);
+        keys.male = false;
+    } else {
+        d3.select("#male").classed("active", true);
+        keys.male = true;
+    }
+    if(!keys.female && !keys.male) {
+        d3.select("#female").classed("active", true);
+        keys.female = true;
+        d3.select("#male").classed("active", true);
+        keys.male = true;
+    }
+})
+d3.select("#female").on("click", function () {
+    if(keys.female)   {
+        d3.select("#female").classed("active", false);
+        keys.female = false;
+    } else {
+        d3.select("#female").classed("active", true);
+        keys.female = true;
+    }
+    if(!keys.female && !keys.male) {
+        d3.select("#female").classed("active", true);
+        keys.female = true;
+        d3.select("#male").classed("active", true);
+        keys.male = true;
+    }
+})

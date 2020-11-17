@@ -492,7 +492,7 @@ p.color--male{
 
 #page12 .page_graph_wrap {
     width: 90%;
-    margin: 0 auto;
+    margin: 0 9.5% 0 0.5%;
 }
 
 #page5 .description, #page8 .description {
@@ -507,4 +507,43 @@ p.color--male{
     text-align: left;
     width: 90%;
     margin: 1em auto;
+}
+
+#mainLegend {
+    position: fixed;
+    top: 45%;
+    right: 1em;
+    width: 10%;
+}
+#mainLegend li {
+    clear: both;
+    color: #fff;
+    cursor: pointer;
+}
+
+#mainLegend span {
+    float: left;
+    margin-bottom: 1em;
+    width: 76%;
+    display: block;
+}
+
+#mainLegend .legend {
+    width: 18%;
+    border: 2px solid black;
+    margin-right: 3%;
+    height: 2em;
+    background-color: #fff;
+}
+
+#mainLegend .text {
+   font-size: 1.8em;
+   margin-top: 0.1em;
+}
+
+#female.active .legend{
+    background-color: #F012BE;
+}
+#male.active .legend{
+    background-color: #1357BE;
 }
