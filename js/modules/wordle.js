@@ -74,7 +74,23 @@ export function wordle(data, w, h) {
             //         .style("opacity", 0);	
             // })
             // .on('mousemove', toolTipStyle)
-            // .on('click', toolTipStyle)
+            .on('click', function (e, d) {
+                d3.select("#textInsert").text("");
+                d3.select("#textInsert_names").text(d.char);
+                d3.select("#titleInsert").text(d.text);
+                // d3.selectAll(".genDot")
+                //     .style("fill", function(d) {
+                //         if(d.gender == 2) return '#F012BE';
+                //         else return '#1357BE';
+                //     })
+                //     .classed('is-active', false)
+                //     .attr('r', radius)
+        
+                // d3.select(this)
+                //     .classed('is-active', true)
+                //     .transition()
+                //     .attr('r', radius * 1.35)
+            })
         _wordle.cloud = svg.selectAll("g text")
             .data(words)
     }
