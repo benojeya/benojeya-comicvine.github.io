@@ -13,8 +13,8 @@ export function funnel(data) {
 
     let radius = 8,
         margin = {top: 70, right: 60, bottom: 50, left: 50},
-        width_names = 1000 - margin.left - margin.right,
-        height_names = 700 - margin.top - margin.bottom;
+        width_names = 900 - margin.left - margin.right,
+        height_names = 1000 - margin.top - margin.bottom;
 
     let y = d3.scaleBand()
             .range([10, height_names], 1);
@@ -48,11 +48,13 @@ export function funnel(data) {
     const circleAnnotations_girl = [{
         note: {
             title: "Girls, not women",
-            label: "'Girl' is the third-most common gendered name for a female character. 'Boy' only shows up sixth for males."
+            label: "",
+            wrap: 10,
+            padding: 10 
         },
         x: x(-.13),
         y: y('girl'),
-        dx: dx(-.07),
+        dx: dx(-0.2),
         dy: 0,
         subject: {
             radius: 2,
@@ -68,17 +70,19 @@ export function funnel(data) {
         .attr("class", "tk-atlas annotation-group")
         .attr("font-size", 12)
         .call(makeCircleAnnotations_girl)
+            .selectAll(".annotation-note-label")
+            .attr("y", "30")
 
 
     const circleAnnotations_man = [{
         note: {
-            title: "Men, not boys",
-            label: "A full 30% of male characters with gendered names get 'man' in their name. That number is only 6% for 'woman'."
+            title: "Men, not boys (30% vs just 6% for female)",
+            label: ""
         },
         x: x(.31),
         y: y('woman'),
-        dx: dx(-.02),
-        dy: 50
+        dx: dx(-.16),
+        dy: 20
     }]
     const makeCircleAnnotations_man = d3.annotation()
         .editMode(false)
@@ -127,51 +131,43 @@ export function funnel(data) {
         })
         .style("opacity", 1)
         .style("fill", function(d) {
-            return "red"
-            // if (d.gen_name === "lady") {
-            //     //return colors.female
-            // } else if (d.gender == 1) {
-            //     //return colors.male
-            // } else {
-            //     //return colors.female
-            // }
+            if (d.gen_name === "lady") return '#F012BE'
+            else if (d.gender == 1) return '#1357BE';
+            else return '#F012BE';
         })
-        // .classed("is-active", function(d) {
-        //     return d.gen_name === 'lady'
-        // })
-        .on('mouseover', function(d) {
-            // var section = d3.select(this);
-            // // section.style("opacity", 0.6)
-            // d3.select('#tooltip')
-            //     .style("left", (d3.event.pageX + 5) + "px")
-            //     .style("top", (d3.event.pageY - 28) + "px")
-            //     .html("<p class='difference'>" + Math.abs(d.gen_per * 100).toFixed(1) + "%</p>");
-            // d3.select('#tooltip').classed('hidden', false);
+        .classed("is-active", function(d) {
+            return d.gen_name === 'lady'
         })
-        .on("click", function(d) {
-            // $("#textInsert").html("");
-            // $("#textInsert_names").html(d.char_list);
-            // $("#titleInsert").html(d.gen_name);
-            // d3.selectAll(".genDot")
-            //     .style("fill", function(d) {
-            //         if (d.gender == 1) {
-            //             return colors.male
-            //         } else {
-            //             return colors.female
-            //         }
-            //     })
-            //     .classed('is-active', false)
-            //     .attr('r', radius)
+        .on('mouseover', function(e, d) {
+            var section = d3.select(this);
+            // section.style("opacity", 0.6)
+            d3.select('#tooltip')
+                .style("left", (e.pageX + 5) + "px")
+                .style("top", (e.pageY - 28) + "px")
+                .html("<p class='difference'>" + Math.abs(d.gen_per * 100).toFixed(1) + "%</p>");
+            d3.select('#tooltip').classed('hidden', false);
+        })
+        .on("click", function(e, d) {
+            d3.select("#textInsert").text("");
+            d3.select("#textInsert_names").text(d.char_list);
+            d3.select("#titleInsert").text(d.gen_name);
+            d3.selectAll(".genDot")
+                .style("fill", function(d) {
+                    if(d.gender == 2) return '#F012BE';
+                    else return '#1357BE';
+                })
+                .classed('is-active', false)
+                .attr('r', radius)
     
-            // d3.select(this)
-            //     .classed('is-active', true)
-            //     .transition()
-            //     .attr('r', radius * 1.35)
+            d3.select(this)
+                .classed('is-active', true)
+                .transition()
+                .attr('r', radius * 1.35)
         })
         .on('mouseout', function() {
-            // var section = d3.select(this);
-            // section.style("opacity", '1')
-            // d3.select('#tooltip').classed('hidden', true);
+            var section = d3.select(this);
+            section.style("opacity", '1')
+            d3.select('#tooltip').classed('hidden', true);
         });
     // Text for gender names
     var texts = svg.selectAll(".dodo")
@@ -200,7 +196,7 @@ export function funnel(data) {
         .style("fill", function(d) {
             if (d.dim == 1) {
                 //return colors.accent
-                return 'green'
+                return '#B90805'
             }
             // else {return "black"}
         })
@@ -224,6 +220,87 @@ export function funnel(data) {
         .style("stroke", "black")
         .style("fill", "none");
     
+    d3.select( "#descendingFemale" ).on("click", function() {
+        femaleOrder();
+        console.log("moi")
+        d3.select("#descendingFemale").classed("activeFemale", true);
+        d3.select("#descendingMale").classed("activeMale", false);
+        window.setTimeout (function () {
+            d3.select("#man_anno").style("display", "block");
+            d3.select("#girl_anno").style("display", "block");
+        }, 500);
+    });
+    
+    d3.select( "#descendingMale" ).on("click", function() {
+        maleOrder();
+        d3.select("#descendingFemale").classed("activeFemale", false);
+        d3.select("#descendingMale").classed("activeMale", true);
+        d3.select("#man_anno").style("display", "none");
+        d3.select("#girl_anno").style("display", "none");
+    });
 
+    function maleOrder(){
+
+        data.sort(function(a,b) {
+             return d3.descending(a.gen_per,b.gen_per);
+           });
+ 
+       y.domain(data.map(function(d) { return d.gen_cat; }));
+ 
+ 
+       d3.selectAll('.genDot') // move the circles
+           .transition().duration(500)
+           .attr("cx", function(d) { return x(d.gen_per); })
+           .attr("cy", function(d) { return y(d.gen_cat); });
+ 
+ 
+       d3.selectAll('.dodo')
+           .transition().duration(500)
+           .attr("y", function(d) {
+             if (d.gen_per <=0){return y(d.gen_cat)+4}
+             else {return y(d.gen_cat)+4}
+            });
+ 
+       d3.selectAll(".between")
+         .transition().duration(500)
+         .attr("x1", function(d){return x(d.gen_per)})
+         .attr("y1", function(d){return y(d.gen_cat)})
+         .attr("x2", function(d){return x(d.per_fake)})
+         .attr("y2", function(d){return y(d.gen_cat)})
+ 
+ 
+     }; //end maleOrder();
+ 
+ 
+     function femaleOrder(){
+ 
+       data.sort(function(a,b) {
+             return d3.ascending(a.gen_per,b.gen_per);
+           });
+ 
+ 
+       y.domain(data.map(function(d) { return d.gen_cat; }));
+ 
+      d3.selectAll('.genDot') // move the circles
+         .transition().duration(500)
+         .attr("cx", function(d) { return x(d.gen_per); })
+         .attr("cy", function(d) { return y(d.gen_cat); });
+ 
+       d3.selectAll('.dodo')
+           .transition().duration(500)
+           .attr("y", function(d) {
+             if (d.gen_per <=0){return y(d.gen_cat)+4}
+             else {return y(d.gen_cat)+4}
+            });
+ 
+       d3.selectAll(".between")
+         .data(data)
+         .transition().duration(500)
+         .attr("x1", function(d){return x(d.gen_per)})
+         .attr("y1", function(d){return y(d.gen_cat)})
+         .attr("x2", function(d){return x(d.per_fake)})
+         .attr("y2", function(d){return y(d.gen_cat)})
+ 
+     }; //end femaleOrder();
     return funnel_div;
 }

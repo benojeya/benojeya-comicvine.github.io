@@ -11,12 +11,40 @@
 <body>
     <div class="content">
         <!-- header goes here -->
-        <header>
-            
+        <header id="page1">
+            <h1>ComicVine</h1>
+            <h2>Visualizing Gender in Comic Books</h2>
         </header>
-
+        <section class="page content" id="page2">
+            <div class="page_content">
+                <h3>Gender Disparity in Comics</h3>
+                <p>Comics are mostly male-dominated. Women are usually token characters, and when portrayed, are over-sexualized and stereotyped; minority groups make even fewer appearances. Recent studies indicate that exposure to inaccurate representation of women in superhero comics decreased egalitarian beliefs in gender roles and lowered body esteem. Also, most of these representations are stereotyped based on the American perspective. In this age, when comic books and superhero movies are billion-dollar commodities, we aim to study Gender Representation in Comic books. By visualizing the disparity in Power, Moniker, Allegiance etc, we hope to understand the themes and beliefs around gender in Comic Books. We hope to better understand gender representation and spark meaningful discussions about the importance of accurate representation.
+                </p>
+            </div>
+        </section>
+        <section class="page graph" id="page3">
+            <div class="page_graph">
+                <div id="wordle_genderedNames"></div>
+            </div>
+        </section>
+        <section class="page graph" id="page4">
+            <div class="page_graph">
+                <div id="wordle_maleNames" class="page_graph_side"></div>
+                <div id="wordle_femaleNames" class="page_graph_side"></div>
+            </div>
+        </section>
+        <section class="page graph" id="page5">
+            <div class="page_graph">
+                <div class="options tk-atlas">
+                    <h4>Sort by</h4>
+                    <button id="descendingFemale" class="activeFemale btn">female</button>
+                    <button id="descendingMale" class="btn">male</button>
+                </div>
+                <div id="funnel_genderedNames"></div>
+            </div>
+        </section>
         <!-- main content of the app -->
-        <div id="main">
+        <!-- <div id="main">
             <div id="page1">
                 <div id="wordle_genderedNames"></div>
             </div>
@@ -42,13 +70,39 @@
                 <h4>Marvel</h4>
                     <div id="brushing_genderedPowers_marvel"></div>
             </div>
-        </div>
+        </div> -->
 
         <!-- footer goes here -->
         <footer>
-
+            <h5>For CS 7450 A - Georgia Institute of Technology</h5>
+            <ul>
+                <li>Angeline Vidhula Jeyachandra</li>
+                <li>Beno Jeya Savarimuthu</li>
+                <li>Prathiksha Dayananda Shetty</li>
+            </ul>
         </footer>
+        <div id="tooltip" class="tk-atlas hidden" style="left: 778px; top: 6602px;"><p class="difference">7.2%</p></div>
+        <div id="stick2" class="is-visible">
+            <div class="speech">
+                <div class="speech_scroll">
+                    <h6 id="titleInsert">DO you want the names?</h6><br><p id="textInsert"></p><p id="textInsert_names">Click on a circle and I‘ll list gender-titled characters!</p> 
+                </div>
+            </div>
+            
+			<!-- <div class="bubbles">
+				<div id="stick_powers2" class="bubble little black arrow br tk-atlas small">
+					<div id="bubble_content2" class="content">
+						<span id="titleInsert"></span><br><span id="textInsert"></span><span id="textInsert_names"></span> 
+					</div>
+				</div>
+			</div> -->
+
+		<img src="assets/images/wonder_woman.png" id="sideBarHero" class="displayed_still" alt="hero"/>
+	</div>
     </div>
+
+      
+      
     <!-- scripts here -->
     <script src="js/lib/d3.js"></script>
     <script src="js/lib/d3.layout.cloud.js"></script>
