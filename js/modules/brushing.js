@@ -5,11 +5,11 @@ export function brushing(data) {
     let brushed_div = document.createDocumentFragment();
 
     let margin = {top: 10, right: 40, bottom: 50, left: 60},
-        width = 1000 - margin.left - margin.right,
+        width = 1110 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
     let margin2 = {top: 20, right: 40, bottom: 10, left: 50},
-        width2 = 1000 - margin2.left - margin2.right,
+        width2 = 1100 - margin2.left - margin2.right,
         height2 = 120 - margin2.top - margin2.bottom;
         
     let svg = d3.select(brushed_div)

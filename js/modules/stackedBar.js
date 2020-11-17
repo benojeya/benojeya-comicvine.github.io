@@ -4,7 +4,7 @@ export function stackedBar(data) {
     let stackedBar_div = document.createDocumentFragment();
 
     let margin = {top: 10, right: 30, bottom: 40, left: 50},
-        width = 800 - margin.left - margin.right,
+        width = 1100 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
 
     let svg = d3.select(stackedBar_div)

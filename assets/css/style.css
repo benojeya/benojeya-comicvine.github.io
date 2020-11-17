@@ -26,15 +26,17 @@ html, body, .content {
     width: 100%;
     height: 100%;
     font-size: 12px;
+    background: url("../images/wallpaper.jpg") 0 0;
+    background-size: 100% 100%;
 }
 
 html, body {
-    background: #2baae6;
+    /* background: #2baae6; */
 }
 header, footer {
     height: 100%;
     width: 100%;
-    background: url("../images/wallpaper_blue.jpg") 0 0;
+    /* background: url("../images/wallpaper_blue.jpg") 0 0; */
     background-size: 100% 120%;
     position: relative;
 }
@@ -43,17 +45,18 @@ header h1 {
     font-size: 8em;
     position: absolute;
     top: 41%;
-    right: 32%;
+    right: 40%;
+    color: #fff
 }
 
 header h2 {
     font-size: 5em;
     position: absolute;
     top: 57%;
-    right: 25.5%;
-    width: 35%;
+    width: 100%;
     text-align: center;
     font-weight: bold;
+    color: #fff;
 }
 
 
@@ -61,21 +64,22 @@ footer h5 {
     font-size: 4em;
     position: absolute;
     top: 40.5%;
-    right: 26%;
-    width: 35%;
+    right: 0;
+    width: 100%;
     text-align: center;
+    color: #fff;
 }
 
 footer ul  {
     font-size: 2.5em;
-    line-height: 1.2em;
+    line-height: 1.5em;
     position: absolute;
     top: 55.3%;
-    right: 29%;
-    width: 35%;
-    text-align: right;
+    width: 100%;
+    text-align: center;
     font-weight: bold;
     font-family: "subHeading";
+    color: #fff;
 }
 
 /* pages */
@@ -108,18 +112,17 @@ footer ul  {
 }
 
 .page.content {
-    background: #ee5454;
+    /* background: #ee5454; */
     height: 100.4%;
     padding: 5% 0;
     box-sizing: border-box;
 }
 .page.graph {
-    background: #fff;
     padding: 5em;
     text-align: center;
-    background:#664EAE;
+    /* background:#664EAE; */
 }
-#page4.page.graph {
+/* #page4.page.graph {
     background: #99B927;
 }
 #page5.page.graph {
@@ -127,7 +130,7 @@ footer ul  {
 }
 #page8.page.graph {
     background: #fe4b03;
-}
+} */
 .page_graph_wrap {
 
     display: flex;
@@ -259,7 +262,7 @@ path.domain {
     display: none;
     display: block;
     position: fixed;
-    top: 14em;
+    top: 9em;
     left: 1em;
     z-index: 100;
     max-width: 250px;
@@ -293,7 +296,7 @@ img.displayed_still {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 125px;
+    width: 270px;
 }
 
 .speech {
@@ -476,7 +479,7 @@ p.color--male{
     height: 330%;
     min-height: 2340px;
 }
-#page12 h4 {
+.page h4 {
     margin-top: 1em;
 }
 #page12 .page_graph_wrap {
@@ -485,4 +488,23 @@ p.color--male{
 
 #page12 rect {
     cursor: pointer;
+}
+
+#page12 .page_graph_wrap {
+    width: 90%;
+    margin: 0 auto;
+}
+
+#page5 .description, #page8 .description {
+    width: 90%;
+}
+ #page12 .description {
+    width: 95%;
+}
+
+#page12 .options h5 {
+    font-size: 1.8em;
+    text-align: left;
+    width: 90%;
+    margin: 1em auto;
 }

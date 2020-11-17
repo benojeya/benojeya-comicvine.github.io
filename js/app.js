@@ -1,6 +1,5 @@
 import { wordle } from './modules/wordle.js';
 import { funnel } from './modules/funnel.js';
-//import { hBar } from './modules/hBar.js';
 import { hBar } from './modules/hBar-funnel.js';
 import { stackedBar } from './modules/stackedBar.js'
 import { brushing } from './modules/brushing.js';
@@ -66,9 +65,12 @@ function init () {
         let funnel_genderedNames = funnel(data);
         document.getElementById("funnel_genderedNames").appendChild(funnel_genderedNames);
     });
-    window.onwheel =  throttle(function(e) {
-        scroll.call(this, [e]);
-    }, 500);
+    // window.onwheel =  throttle(function(e) {
+    //     scroll.call(this, [e]);
+    // }, 500);
+    window.onscroll = throttle(function(e){
+        scrolling.call(this, [e])
+    }, 100);
 }
 
 function throttle(callback, limit) {
@@ -98,121 +100,135 @@ function debounce(func, wait, immediate) {
 	};
 }
 
-function scrollPage(pg, ms, t) {
-   // window.setTimeout (function () {   
-        window.scrollTo({
-            top: findPos(document.getElementById("page" + pg)),
-            left: 0,
-            behavior: 'smooth'
-        })
-        d3.select("#stick2").style("transform", "translate("+ t + ", 0)")
-    //}, ms);
-}
-
-function scroll (args) {
-    let wDelta = args[0].deltaY < 0 ? "down" : "up",
-        wordler = false,
-        prevPage = curPage;
-    if(wDelta == "up" && curPage < 15) {
-        if(curPage == 2) wordler = true; 
-        curPage++;
-    } else if(wDelta == "down" && curPage > 1) {
-        curPage--;
-    }
-    console.log(curPage)
-
-    if(curPage == 4) {
-        wordle_genderedNames.cloud.transition()
-            .duration(1000)
-            .attr("transform", function(d, i) {
-                return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
-            })
-        scrollPage(curPage, 500, "0");
-        wordle_maleNames.cloud.transition()
-            .duration(1000)
-            .attr("transform", function(d, i) {
-                return "translate(" + [d.x, d.y ] + ")";
-            })
-        wordle_femaleNames.cloud.transition()
-            .duration(1000)
-            .attr("transform", function(d, i) {
-                return "translate(" + [d.x, d.y ] + ")";
-            });
-        
-    } else if(curPage == 3) {
-        wordle_genderedNames.cloud.transition()
-            .duration(1000)
-            .attr("transform", function(d, i) {
-                return "translate(" + [d.x, d.y ] + ")";
-            })
-        wordle_maleNames.cloud
-            .attr("transform", function(d, i) {
-                return "translate(" + [-2000, d.y ] + ")";
-            })
-        wordle_femaleNames.cloud
-            .attr("transform", function(d, i) {
-                return "translate(" + [2000, d.y ] + ")";
-            })
-        if (wordler) scrollPage(curPage, 0, "0");
-        else scrollPage(curPage, 100, "0");
-    } else if (curPage == 2) {
-        wordle_genderedNames.cloud.transition()
-            .duration(3000)
-            .attr("transform", function(d, i) {
-                return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
-            })
-            scrollPage(curPage, 0, "-120%")
-    } else if(curPage == 5) {
-        scrollPage(curPage, 0, "0");
-        
-    } else if(curPage == 6 || curPage == 7) {
+function scrolling(e) {
+    let page3 = document.getElementById("page3"),
+        page12 = document.getElementById("page12"),
+        pos1 = findPos(page3) - 100,
+        pos2 = findPos(page12),
+        top = window.pageYOffset,
+        bottom = window.pageYOffset + window.innerHeight;
+    if(top >= pos1 && bottom <= pos2) {
         d3.select("#stick2").style("transform", "translate(0, 0)")
-        if(prevPage == 8) {
-            window.scrollTo({
-                top: document.documentElement.scrollTop - window.innerHeight,
-                left: 0,
-                behavior: 'smooth'
-            })
-        } else if(prevPage == 7) {
-            window.scrollTo({
-                top: document.documentElement.scrollTop - window.innerHeight/2,
-                left: 0,
-                behavior: 'smooth'
-            })
-        } else {
-            window.scrollTo({
-                top: document.documentElement.scrollTop + window.innerHeight/2,
-                left: 0,
-                behavior: 'smooth'
-            })
-        }
-    }  else if(curPage == 8 || curPage == 9 || curPage == 10 || curPage == 11) {
-        d3.select("#stick2").style("transform", "translate(0, 0)")
-        if(prevPage == 7) {
-            window.scrollTo({
-                top: findPos(document.getElementById("page8")),
-                left: 0,
-                behavior: 'smooth'
-            })
-        } else if(prevPage == 8 || prevPage == 9 || prevPage == 10) {
-            window.scrollTo({
-                top: document.documentElement.scrollTop + window.innerHeight - 0.2*window.innerHeight,
-                left: 0,
-                behavior: 'smooth'
-            })
-        } else {
-            window.scrollTo({
-                top: document.documentElement.scrollTop + window.innerHeight/1.5,
-                left: 0,
-                behavior: 'smooth'
-            })
-        }
-    } else if(curPage == 12) {
-        scrollPage(curPage, 0, "-120%")
     } else {
-        scrollPage(curPage, 0, "-120%")
+        d3.select("#stick2").style("transform", "translate(-120%, 0)")
     }
 }
+
+// function scrollPage(pg, ms, t) {
+//    // window.setTimeout (function () {   
+//         window.scrollTo({
+//             top: findPos(document.getElementById("page" + pg)),
+//             left: 0,
+//             behavior: 'smooth'
+//         })
+//         d3.select("#stick2").style("transform", "translate("+ t + ", 0)")
+//     //}, ms);
+// }
+
+// function scroll (args) {
+//     let wDelta = args[0].deltaY < 0 ? "down" : "up",
+//         wordler = false,
+//         prevPage = curPage;
+//     if(wDelta == "up" && curPage < 15) {
+//         if(curPage == 2) wordler = true; 
+//         curPage++;
+//     } else if(wDelta == "down" && curPage > 1) {
+//         curPage--;
+//     }
+//     console.log(curPage)
+
+//     if(curPage == 4) {
+//         wordle_genderedNames.cloud.transition()
+//             .duration(1000)
+//             .attr("transform", function(d, i) {
+//                 return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
+//             })
+//         scrollPage(curPage, 500, "0");
+//         wordle_maleNames.cloud.transition()
+//             .duration(1000)
+//             .attr("transform", function(d, i) {
+//                 return "translate(" + [d.x, d.y ] + ")";
+//             })
+//         wordle_femaleNames.cloud.transition()
+//             .duration(1000)
+//             .attr("transform", function(d, i) {
+//                 return "translate(" + [d.x, d.y ] + ")";
+//             });
+        
+//     } else if(curPage == 3) {
+//         wordle_genderedNames.cloud.transition()
+//             .duration(1000)
+//             .attr("transform", function(d, i) {
+//                 return "translate(" + [d.x, d.y ] + ")";
+//             })
+//         wordle_maleNames.cloud
+//             .attr("transform", function(d, i) {
+//                 return "translate(" + [-2000, d.y ] + ")";
+//             })
+//         wordle_femaleNames.cloud
+//             .attr("transform", function(d, i) {
+//                 return "translate(" + [2000, d.y ] + ")";
+//             })
+//         if (wordler) scrollPage(curPage, 0, "0");
+//         else scrollPage(curPage, 100, "0");
+//     } else if (curPage == 2) {
+//         wordle_genderedNames.cloud.transition()
+//             .duration(3000)
+//             .attr("transform", function(d, i) {
+//                 return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
+//             })
+//             scrollPage(curPage, 0, "-120%")
+//     } else if(curPage == 5) {
+//         scrollPage(curPage, 0, "0");
+        
+//     } else if(curPage == 6 || curPage == 7) {
+//         d3.select("#stick2").style("transform", "translate(0, 0)")
+//         if(prevPage == 8) {
+//             window.scrollTo({
+//                 top: document.documentElement.scrollTop - window.innerHeight,
+//                 left: 0,
+//                 behavior: 'smooth'
+//             })
+//         } else if(prevPage == 7) {
+//             window.scrollTo({
+//                 top: document.documentElement.scrollTop - window.innerHeight/2,
+//                 left: 0,
+//                 behavior: 'smooth'
+//             })
+//         } else {
+//             window.scrollTo({
+//                 top: document.documentElement.scrollTop + window.innerHeight/2,
+//                 left: 0,
+//                 behavior: 'smooth'
+//             })
+//         }
+//     }  else if(curPage == 8 || curPage == 9 || curPage == 10 || curPage == 11) {
+//         d3.select("#stick2").style("transform", "translate(0, 0)")
+//         if(prevPage == 7) {
+//             window.scrollTo({
+//                 top: findPos(document.getElementById("page8")),
+//                 left: 0,
+//                 behavior: 'smooth'
+//             })
+//         } else if(prevPage == 8 || prevPage == 9 || prevPage == 10) {
+//             window.scrollTo({
+//                 top: document.documentElement.scrollTop + window.innerHeight - 0.2*window.innerHeight,
+//                 left: 0,
+//                 behavior: 'smooth'
+//             })
+//         } else {
+//             window.scrollTo({
+//                 top: document.documentElement.scrollTop + window.innerHeight/1.5,
+//                 left: 0,
+//                 behavior: 'smooth'
+//             })
+//         }
+//     } else if(curPage == 12) {
+//         scrollPage(curPage, 0, "-120%")
+//     } else {
+//         scrollPage(curPage, 0, "-120%")
+//     }
+// }
 function findPos(obj) {
     var curtop = 0;
     if (obj.offsetParent) {
