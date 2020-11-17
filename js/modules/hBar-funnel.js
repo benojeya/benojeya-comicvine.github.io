@@ -6,16 +6,18 @@ export function hBar(data) {
         g.call(d3.axisLeft(y0));
         g.select(".domain").remove();
         g.selectAll(".tick line").attr("stroke", "#777").attr("opacity", "0");
-        g.selectAll(".tick text").attr("dy", -25).attr("class", "label");
+        g.selectAll(".tick text").attr("dy", -25).attr("class", "label").attr("font-size","2em")
+            .attr("font-family", "subHeading")
+            .attr("fill", "#fe4b03");
     }
 
     let hBar_div = document.createDocumentFragment();
 
 
     let radius = 8,
-        margin = {top: 70, right: 60, bottom: 50, left: 50},
+        margin = {top: 70, right: 60, bottom: 20, left: 50},
         width_power = 1000 - margin.left - margin.right,
-        height_power = 2100 - margin.top - margin.bottom,
+        height_power = 1950 - margin.top ,
         y = d3.scaleBand().range([10, height_power]),
         y0 = d3.scaleOrdinal(),
         x = d3.scaleLinear().rangeRound([0, width_power]);
@@ -42,7 +44,7 @@ export function hBar(data) {
     
 
     let y0Range = [0];
-    let padBetween = 60, pad = 0.2;
+    let padBetween = 69, pad = 0.25;
     let barHeight = (height_power * 0.65) / data.length;
     let categoryG = d3.rollup(data, v=> {
 
@@ -87,11 +89,11 @@ export function hBar(data) {
         .data(data)
         .enter().append("line")
         .attr("class", "power_bar")
-        .style("fill", function(d, i) {
+        .style("stroke", function(d, i) {
             if (d.diff >= 0) {
                 //return colors.male
-                return "blue";
-            } else return "pink";//colors.female;
+                return " #1357BE";
+            } else return "#F012BE";//colors.female;
         })
         .attr("x1", function(d){
             if (d.diff <= 0) {
@@ -153,11 +155,14 @@ export function hBar(data) {
         })
         .style("opacity", 1)
         .style("fill", function(d) {
-            return "red"
+            if (d.diff >= 0) {
+                //return colors.male
+                return " #1357BE";
+            } else return "#F012BE";//colors.female;
             // if (d.gen_name === "lady") {
-            //     //return colors.female
+            //     return "#F012BE"
             // } else if (d.gender == 1) {
-            //     //return colors.male
+            //     return colors.male
             // } else {
             //     //return colors.female
             // }
@@ -216,6 +221,15 @@ export function hBar(data) {
                 return 'start'
             }
         })
+        .attr("font-size","0.9em")
+        .attr("font-family", "body")
+        .style("text-transform", "uppercase")
+        .style("fill", function(d) {
+            if (d.diff >= 0) {
+                //return colors.male
+                return " #1357BE";
+            } else return "#F012BE";
+        })
         .attr("x", function(d) {
             if (d.diff <= 0) {
                 return x(d.diff) - 17
@@ -241,48 +255,48 @@ export function hBar(data) {
         .on('mouseout', function() {
             // d3.select('#tooltip').classed('hidden', true);
         });
-    const annotation_object = [{
-        note: {
-            title: "Objectâ€”ified",
-            label: "Though Wonder Woman has her lasso, and Stargirl has a cosmic staff, it's generally the male characters that like their stuff. Think Thor and his hammer, or Iron Man and his suit.",
-            wrap: 180
-        },
-        y: y('Gadgets') + padBetween - 15,
-        x: 100,
+    // const annotation_object = [{
+    //     note: {
+    //         title: "Objectâ€”ified",
+    //         label: "Though Wonder Woman has her lasso, and Stargirl has a cosmic staff, it's generally the male characters that like their stuff. Think Thor and his hammer, or Iron Man and his suit.",
+    //         wrap: 180
+    //     },
+    //     y: y('Gadgets') + padBetween - 15,
+    //     x: 100,
 
-    }]
+    // }]
 
-    const makeAnnotation_object = d3.annotation()
-        .editMode(false)
-        .type(d3.annotationLabel)
-        .annotations(annotation_object)
-    svg.append("g")
-        .attr("id", "object_anno")
-        .attr("class", "annotation-group")
-        .attr("class", "tk-atlas")
-        .attr("font-size", 12)
-        .call(makeAnnotation_object)
-    const annotation_mind = [{
-        note: {
-            title: "Mind your powers",
-            label: "There is a clear trend here: Female characters are more often given non-physical, thought-induced abilities.",
-            wrap: 130
-        },
-        y: y('Empathy') + 10 + padBetween * 5,
-        x: 450,
+    // const makeAnnotation_object = d3.annotation()
+    //     .editMode(false)
+    //     .type(d3.annotationLabel)
+    //     .annotations(annotation_object)
+    // svg.append("g")
+    //     .attr("id", "object_anno")
+    //     .attr("class", "annotation-group")
+    //     .attr("class", "tk-atlas")
+    //     .attr("font-size", 12)
+    //     .call(makeAnnotation_object)
+    // const annotation_mind = [{
+    //     note: {
+    //         title: "Mind your powers",
+    //         label: "There is a clear trend here: Female characters are more often given non-physical, thought-induced abilities.",
+    //         wrap: 130
+    //     },
+    //     y: y('Empathy') + 10 + padBetween * 5,
+    //     x: 450,
 
-    }]
+    // }]
 
-    const makeAnnotation_mind = d3.annotation()
-        .editMode(false)
-        .type(d3.annotationLabel)
-        .annotations(annotation_mind)
-    svg.append("g")
-        .attr("id", "mind_anno")
-        .attr("class", "annotation-group")
-        .attr("class", "tk-atlas")
-        .attr("font-size", 12)
-        .call(makeAnnotation_mind)
+    // const makeAnnotation_mind = d3.annotation()
+    //     .editMode(false)
+    //     .type(d3.annotationLabel)
+    //     .annotations(annotation_mind)
+    // svg.append("g")
+    //     .attr("id", "mind_anno")
+    //     .attr("class", "annotation-group")
+    //     .attr("class", "tk-atlas")
+    //     .attr("font-size", 12)
+    //     .call(makeAnnotation_mind)
     
     return hBar_div;
 }

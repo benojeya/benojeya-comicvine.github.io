@@ -175,7 +175,14 @@ export function funnel(data) {
 
     texts.enter().append("text")
         .attr("class", "bar__label dodo tk-atlas")
-        .attr("font-size", 10)
+        .style("font-size", function(d) {
+            if (d.dim == 1) {
+                //return colors.accent
+                return '1em'
+            } else return '0.9em';
+        })
+        .attr("font-family", "body")
+        .style("text-transform", "uppercase")
         .attr("x", function(d) {
             if (d.gen_per <= 0) {
                 return x(d.gen_per) - 15
@@ -196,8 +203,14 @@ export function funnel(data) {
         .style("fill", function(d) {
             if (d.dim == 1) {
                 //return colors.accent
-                return '#B90805'
+                return '#000'
             }
+            if(d.gender == 2) return '#F012BE';
+                    else return '#1357BE';
+            // if (d.diff >= 0) {
+            //     //return colors.male
+            //     return " #1357BE";
+            // } else return "#F012BE";
             // else {return "black"}
         })
         .text(function(d) {
@@ -222,7 +235,6 @@ export function funnel(data) {
     
     d3.select( "#descendingFemale" ).on("click", function() {
         femaleOrder();
-        console.log("moi")
         d3.select("#descendingFemale").classed("activeFemale", true);
         d3.select("#descendingMale").classed("activeMale", false);
         window.setTimeout (function () {
@@ -258,7 +270,7 @@ export function funnel(data) {
            .transition().duration(500)
            .attr("y", function(d) {
              if (d.gen_per <=0){return y(d.gen_cat)+4}
-             else {return y(d.gen_cat)+4}
+                else {return y(d.gen_cat)+4}
             });
  
        d3.selectAll(".between")

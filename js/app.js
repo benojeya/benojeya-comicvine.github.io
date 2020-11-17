@@ -99,40 +99,42 @@ function debounce(func, wait, immediate) {
 }
 
 function scrollPage(pg, ms, t) {
-    window.setTimeout (function () {   
+   // window.setTimeout (function () {   
         window.scrollTo({
             top: findPos(document.getElementById("page" + pg)),
             left: 0,
             behavior: 'smooth'
         })
         d3.select("#stick2").style("transform", "translate("+ t + ", 0)")
-    }, ms);
+    //}, ms);
 }
 
 function scroll (args) {
     let wDelta = args[0].deltaY < 0 ? "down" : "up",
-        wordler = false;
+        wordler = false,
+        prevPage = curPage;
     if(wDelta == "up" && curPage < 10) {
         if(curPage == 2) wordler = true; 
         curPage++;
     } else if(wDelta == "down" && curPage > 1) {
         curPage--;
     }
+    console.log(curPage)
 
     if(curPage == 4) {
         wordle_genderedNames.cloud.transition()
-            .duration(2000)
+            .duration(1000)
             .attr("transform", function(d, i) {
                 return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
             })
         scrollPage(curPage, 500, "0");
         wordle_maleNames.cloud.transition()
-            .duration(2000)
+            .duration(1000)
             .attr("transform", function(d, i) {
                 return "translate(" + [d.x, d.y ] + ")";
             })
         wordle_femaleNames.cloud.transition()
-            .duration(2000)
+            .duration(1000)
             .attr("transform", function(d, i) {
                 return "translate(" + [d.x, d.y ] + ")";
             });
@@ -160,7 +162,31 @@ function scroll (args) {
                 return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
             })
             scrollPage(curPage, 0, "-120%")
-    } else if(curPage == 4) {
+    } else if(curPage == 5) {
+        scrollPage(curPage, 0, "0");
+        
+    } else if(curPage == 6 || curPage == 7) {
+        d3.select("#stick2").style("transform", "translate(0, 0)")
+        if(prevPage == 8) {
+            window.scrollTo({
+                top: document.documentElement.scrollTop - window.innerHeight,
+                left: 0,
+                behavior: 'smooth'
+            })
+        } else if(prevPage == 7) {
+            window.scrollTo({
+                top: document.documentElement.scrollTop - window.innerHeight/1.5,
+                left: 0,
+                behavior: 'smooth'
+            })
+        } else {
+            window.scrollTo({
+                top: document.documentElement.scrollTop + window.innerHeight/1.5,
+                left: 0,
+                behavior: 'smooth'
+            })
+        }
+    }  else if(curPage == 8) {
         scrollPage(curPage, 0, "0")
     } else {
         scrollPage(curPage, 0, "-120%")
@@ -225,11 +251,11 @@ window.onload = init;
 //     document.getElementById("funnel_genderedNames").appendChild(funnel_genderedNames);
 // });
 
-// d3.csv('assets/data/gendered_powers.csv').then(function (data) {
-//     // bar chart for gendered powers
-//     let hBar_genderedPowers = hBar(data);
-//     document.getElementById("hBar_genderedPowers").appendChild(hBar_genderedPowers);
-// });
+d3.csv('assets/data/gendered_powers.csv').then(function (data) {
+    // bar chart for gendered powers
+    let hBar_genderedPowers = hBar(data);
+    document.getElementById("hBar_genderedPowers").appendChild(hBar_genderedPowers);
+});
 
 // d3.csv('assets/data/gendered_year_range_marvel.csv').then(function (data) {
 //     // stacked bar chart for year of appearance

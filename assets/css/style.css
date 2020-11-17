@@ -119,6 +119,15 @@ footer ul  {
     text-align: center;
     background:#664EAE;
 }
+#page4.page.graph {
+    background: #99B927;
+}
+#page5.page.graph {
+    background: #F3D403;
+}
+#page8.page.graph {
+    background: #fe4b03;
+}
 .page_graph_wrap {
 
     display: flex;
@@ -154,7 +163,10 @@ footer ul  {
 }
 
 #page5 {
-    height: 200%;
+    height: 220%;
+}
+#page8 {
+    height: 370%;
 }
 
 #page5 .page_graph_wrap {
@@ -187,14 +199,12 @@ line.between {
 }
 
 line.hBar {
-    stroke: #888;
-    stroke-dasharray: 4px 4px;
-    stroke-width: 0.5px;
+    stroke-width: 0.7px;
 }
 
 .tick line {
     stroke-dasharray: 4px 4px;
-    stroke: #ccc;
+    color: #ccc;
 }
 
 path.domain {
@@ -378,4 +388,15 @@ img.displayed_still {
 
 .page_graph_wrap.funnel_wrap {
     display: block;
+}
+
+#page5 .page_graph_wrap {
+    max-height: 100%;
+}
+#page8 .page_graph_wrap {
+    max-height: 100%;
+}
+
+#page5 h4 {
+    margin-top: 1em;
 }
