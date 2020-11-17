@@ -44,9 +44,9 @@ function init () {
                     count: d.count
                 };
         });
-        wordle_genderedNames = wordle(allGenders, 1000, 550);
-        wordle_maleNames = wordle(male, 550, 550);
-        wordle_femaleNames = wordle(female, 550, 550);
+        wordle_genderedNames = wordle(allGenders, 550, 550);
+        wordle_maleNames = wordle(male, 400, 550);
+        wordle_femaleNames = wordle(female, 400, 550);
     
         document.getElementById("wordle_genderedNames").appendChild(wordle_genderedNames.div);
         document.getElementById("wordle_maleNames").appendChild(wordle_maleNames.div);
@@ -98,13 +98,14 @@ function debounce(func, wait, immediate) {
 	};
 }
 
-function scrollPage(pg, ms) {
+function scrollPage(pg, ms, t) {
     window.setTimeout (function () {   
         window.scrollTo({
             top: findPos(document.getElementById("page" + pg)),
             left: 0,
             behavior: 'smooth'
         })
+        d3.select("#stick2").style("transform", "translate("+ t + ", 0)")
     }, ms);
 }
 
@@ -124,7 +125,7 @@ function scroll (args) {
             .attr("transform", function(d, i) {
                 return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
             })
-        scrollPage(curPage, 500);
+        scrollPage(curPage, 500, "0");
         wordle_maleNames.cloud.transition()
             .duration(2000)
             .attr("transform", function(d, i) {
@@ -134,7 +135,8 @@ function scroll (args) {
             .duration(2000)
             .attr("transform", function(d, i) {
                 return "translate(" + [d.x, d.y ] + ")";
-            })
+            });
+        
     } else if(curPage == 3) {
         wordle_genderedNames.cloud.transition()
             .duration(1000)
@@ -149,18 +151,19 @@ function scroll (args) {
             .attr("transform", function(d, i) {
                 return "translate(" + [2000, d.y ] + ")";
             })
-        if (wordler) scrollPage(curPage, 0);
-        else scrollPage(curPage, 100);
+        if (wordler) scrollPage(curPage, 0, "0");
+        else scrollPage(curPage, 100, "0");
     } else if (curPage == 2) {
         wordle_genderedNames.cloud.transition()
-        .duration(3000)
-        .attr("transform", function(d, i) {
-            return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
-        })
-        scrollPage(curPage, 0)
-    }
-    else {
-        scrollPage(curPage, 0)
+            .duration(3000)
+            .attr("transform", function(d, i) {
+                return "translate(" + [d.x*(i+5)*500, d.y ] + ")";
+            })
+            scrollPage(curPage, 0, "-120%")
+    } else if(curPage == 4) {
+        scrollPage(curPage, 0, "0")
+    } else {
+        scrollPage(curPage, 0, "-120%")
     }
 }
 function findPos(obj) {

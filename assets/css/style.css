@@ -80,8 +80,10 @@ footer ul  {
 
 /* pages */
 .page {
-    width: 100%;
     height: 100%;
+}
+.content {
+    width: 100%;
 }
 .page_content {
     position: relative;
@@ -113,10 +115,24 @@ footer ul  {
 }
 .page.graph {
     background: #fff;
-}
-.page_graph {
     padding: 5em;
     text-align: center;
+    background:#664EAE;
+}
+.page_graph_wrap {
+
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    background: #fff;
+    margin: 0 0 0 15%;
+    border-radius: 5em;
+    padding: 1%;
+    border: 1em solid;
+    max-height: 550px;
+}
+.page_graph_wrap div {
+    height: 100%;
 }
 #wordle_genderedNames {
     margin: 2em auto;
@@ -128,7 +144,7 @@ footer ul  {
     height: 80%;
 }
 
-#page4 .page_graph {
+#page4 .page_graph_wrap {
     display: flex;
     flex-direction: row;
 }
@@ -141,7 +157,7 @@ footer ul  {
     height: 200%;
 }
 
-#page5 .page_graph {
+#page5 .page_graph_wrap {
     padding: 0;
 }
 
@@ -231,23 +247,22 @@ path.domain {
     display: none;
     display: block;
     position: fixed;
-    top: 50%;
-    top: 5em;
-    right: 3em;
+    top: 14em;
+    left: 1em;
     z-index: 100;
     max-width: 250px;
     max-height: 300px;
     font-size: 1em;
     font-family: "body";
     cursor: default;
-    /* -webkit-transform: translate(100%, -50%);
-    -ms-transform: translate(100%, -50%);
-    transform: translate(100%, -50%);
+    -webkit-transform: translate(-120%, 0);
+    -ms-transform: translate(-120%, 0);
+    transform: translate(-120%, 0);
     -webkit-transition: 500ms -webkit-transform;
     transition: 500ms -webkit-transform;
     -o-transition: 500ms transform;
     transition: 500ms transform;
-    transition: 500ms transform, 500ms -webkit-transform; */
+    transition: 500ms transform, 500ms -webkit-transform;
 }
 #titleInsert {
     color: #B90805;
@@ -273,7 +288,7 @@ img.displayed_still {
 	position: relative;
 	background: #fff;
     border-radius: .4em;
-    min-height: 10px;
+    min-height: 300px;
     max-height: 300px;
     min-width: 200px;
     max-width: 200px;
@@ -293,14 +308,16 @@ img.displayed_still {
 	border-bottom: 0;
 	border-left: 0;
 	margin-left: -10px;
-	margin-bottom: -20px;
+    margin-bottom: -20px;
+    
+    
 }
 
 .speech_scroll {
     max-width: 180px;
     min-width: 180px;
-    max-height: 180px;
-    max-height: 180px;
+    max-height: 275px;
+    max-height: 275px;
     margin: 0 auto;
     padding: 10px;
     overflow: auto;
@@ -328,4 +345,37 @@ img.displayed_still {
 }
 .btn.activeMale {
     background-color: #1357BE;
+}
+
+.description {
+    margin: 0 auto;
+    height: 500px;
+    padding: 1%;
+    width: 70%;
+}
+
+.description.small {
+    width: 50%;
+}
+
+.description h3 {
+    font-size: 2.3em;
+    font-weight: bold;
+    padding: 0.2em;
+}
+.description h4 {
+    font-size: 1.7em;
+    font-weight: bold;
+}
+
+.description p {
+    font-size: 1.15em;
+}
+
+.wordle_container  {
+    text-align: right;
+}
+
+.page_graph_wrap.funnel_wrap {
+    display: block;
 }
