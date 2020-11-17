@@ -4,12 +4,12 @@ export function brushing(data) {
     
     let brushed_div = document.createDocumentFragment();
 
-    let margin = {top: 10, right: 30, bottom: 35, left: 50},
-        width = 1350 - margin.left - margin.right,
+    let margin = {top: 10, right: 40, bottom: 50, left: 60},
+        width = 1000 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
-    let margin2 = {top: 0, right: 30, bottom: 10, left: 50},
-        width2 = 1350 - margin2.left - margin2.right,
+    let margin2 = {top: 20, right: 40, bottom: 10, left: 50},
+        width2 = 1000 - margin2.left - margin2.right,
         height2 = 120 - margin2.top - margin2.bottom;
         
     let svg = d3.select(brushed_div)
@@ -32,17 +32,17 @@ export function brushing(data) {
     
     var x1 = d3.scaleBand()
         .padding(0.05);
-
+    let max_male = d3.max(data, function(d) { return +d.Male ;} );
     var y = d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) { return +d.Male ;} )])
+        .domain([0, max_male])
         .range([ height, 0 ]);
 
     var y2 = d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) { return +d.Male ;} )])
+        .domain([0, max_male])
         .range([ height2, 0 ]);
         
     var z = d3.scaleOrdinal()
-        .range(["blue", "fuchsia"]);
+        .range(["#1357BE", "#F012BE"]);
 
     var keys = data.columns.slice(1);
     let brush = d3.brushX()
@@ -52,8 +52,8 @@ export function brushing(data) {
         
     x0.domain(data.map(function(d) { return d.Year; }));
     x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-    y.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]);
-    y2.domain([0, d3.max(data, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]);
+    y.domain([0, max_male]);
+    y2.domain([0, max_male]);
 
     g.append("g")
         .selectAll("g")
@@ -90,7 +90,7 @@ export function brushing(data) {
 
     svg.append("g")
         .attr("class", "xAxis")
-        .attr("transform", "translate(" + margin.left + "," + (height + margin.bottom - margin.top - 14) + ")")
+        .attr("transform", "translate(" + margin.left + "," + (height + margin.bottom - margin.top - 30) + ")")
         .call(d3.axisBottom(x0))
         .selectAll("text")
         .attr("y", 0)
@@ -101,7 +101,24 @@ export function brushing(data) {
         .style("text-anchor", "start");
     svg.append("g")
         .attr("class", "yAxis")
+        .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
         .call(d3.axisLeft(y));
+    svg.append("text")             
+        .attr("transform",
+                "translate(" + (width/2) + " ," + 
+                                (height + margin.top + 50) + ")")
+        .style("text-anchor", "middle")
+        .style("text-transform", "uppercase")
+        .style("font-family", "body")
+        .text("YEARS OF ORIGIN");
+    svg.append("text")             
+        .attr("transform",
+                "translate(25 ," + 
+                                 (height/2) + ") rotate(-90)")
+        .style("text-anchor", "middle")
+        .style("text-transform", "uppercase")
+        .style("font-family", "body")
+        .text("No. of characters created");
 
     var legend = g.append("g")
         .attr("font-family", "sans-serif")

@@ -113,7 +113,7 @@ function scroll (args) {
     let wDelta = args[0].deltaY < 0 ? "down" : "up",
         wordler = false,
         prevPage = curPage;
-    if(wDelta == "up" && curPage < 10) {
+    if(wDelta == "up" && curPage < 15) {
         if(curPage == 2) wordler = true; 
         curPage++;
     } else if(wDelta == "down" && curPage > 1) {
@@ -175,7 +175,28 @@ function scroll (args) {
             })
         } else if(prevPage == 7) {
             window.scrollTo({
-                top: document.documentElement.scrollTop - window.innerHeight/1.5,
+                top: document.documentElement.scrollTop - window.innerHeight/2,
+                left: 0,
+                behavior: 'smooth'
+            })
+        } else {
+            window.scrollTo({
+                top: document.documentElement.scrollTop + window.innerHeight/2,
+                left: 0,
+                behavior: 'smooth'
+            })
+        }
+    }  else if(curPage == 8 || curPage == 9 || curPage == 10 || curPage == 11) {
+        d3.select("#stick2").style("transform", "translate(0, 0)")
+        if(prevPage == 7) {
+            window.scrollTo({
+                top: findPos(document.getElementById("page8")),
+                left: 0,
+                behavior: 'smooth'
+            })
+        } else if(prevPage == 8 || prevPage == 9 || prevPage == 10) {
+            window.scrollTo({
+                top: document.documentElement.scrollTop + window.innerHeight - 0.2*window.innerHeight,
                 left: 0,
                 behavior: 'smooth'
             })
@@ -186,8 +207,8 @@ function scroll (args) {
                 behavior: 'smooth'
             })
         }
-    }  else if(curPage == 8) {
-        scrollPage(curPage, 0, "0")
+    } else if(curPage == 12) {
+        scrollPage(curPage, 0, "-120%")
     } else {
         scrollPage(curPage, 0, "-120%")
     }
@@ -257,24 +278,24 @@ d3.csv('assets/data/gendered_powers.csv').then(function (data) {
     document.getElementById("hBar_genderedPowers").appendChild(hBar_genderedPowers);
 });
 
-// d3.csv('assets/data/gendered_year_range_marvel.csv').then(function (data) {
-//     // stacked bar chart for year of appearance
-//     let hBar_genderedPowers_range_marvel = stackedBar(data);
-//     document.getElementById("hBar_genderedPowers_range_dc").appendChild(hBar_genderedPowers_range_marvel);
-// });
-// d3.csv('assets/data/gendered_year_range_dc.csv').then(function (data) {
-//     // stacked bar chart for year of appearance
-//     let hBar_genderedPowers_range_dc = stackedBar(data);
-//     document.getElementById("hBar_genderedPowers_range_marvel").appendChild(hBar_genderedPowers_range_dc);
-// });
+d3.csv('assets/data/gendered_year_range_marvel.csv').then(function (data) {
+    // stacked bar chart for year of appearance
+    let hBar_genderedPowers_range_marvel = stackedBar(data);
+    document.getElementById("hBar_genderedPowers_range_marvel").appendChild(hBar_genderedPowers_range_marvel);
+});
+d3.csv('assets/data/gendered_year_range_dc.csv').then(function (data) {
+    // stacked bar chart for year of appearance
+    let hBar_genderedPowers_range_dc = stackedBar(data);
+    document.getElementById("hBar_genderedPowers_range_dc").appendChild(hBar_genderedPowers_range_dc);
+});
 
 
-// d3.csv('assets/data/gendered_year_dc.csv').then(function (data) {
-//     let brushing_genderedPowers_dc = brushing(data);
-//     document.getElementById("brushing_genderedPowers_dc").appendChild(brushing_genderedPowers_dc);
-// });
+d3.csv('assets/data/gendered_year_dc.csv').then(function (data) {
+    let brushing_genderedPowers_dc = brushing(data);
+    document.getElementById("brushing_genderedPowers_dc").appendChild(brushing_genderedPowers_dc);
+});
 
-// d3.csv('assets/data/gendered_year_marvel.csv').then(function (data) {
-//     let brushing_genderedPowers_marvel = brushing(data);
-//     document.getElementById("brushing_genderedPowers_marvel").appendChild(brushing_genderedPowers_marvel);
-// });
+d3.csv('assets/data/gendered_year_marvel.csv').then(function (data) {
+    let brushing_genderedPowers_marvel = brushing(data);
+    document.getElementById("brushing_genderedPowers_marvel").appendChild(brushing_genderedPowers_marvel);
+});

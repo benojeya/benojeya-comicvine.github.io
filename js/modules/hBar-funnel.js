@@ -6,7 +6,7 @@ export function hBar(data) {
         g.call(d3.axisLeft(y0));
         g.select(".domain").remove();
         g.selectAll(".tick line").attr("stroke", "#777").attr("opacity", "0");
-        g.selectAll(".tick text").attr("dy", -25).attr("class", "label").attr("font-size","2em")
+        g.selectAll(".tick text").attr("dy", -25).attr("class", "label").attr("font-size","1.5em")
             .attr("font-family", "subHeading")
             .attr("fill", "#fe4b03");
     }
@@ -170,19 +170,17 @@ export function hBar(data) {
         // .classed("is-active", function(d) {
         //     return d.gen_name === 'lady'
         // })
-        .on('mouseover', function(d) {
-            // var section = d3.select(this);
-            // // section.style("opacity", 0.6)
-            // d3.select('#tooltip')
-            //     .style("left", (d3.event.pageX + 5) + "px")
-            //     .style("top", (d3.event.pageY - 28) + "px")
-            //     .html("<p class='difference'>" + Math.abs(d.gen_per * 100).toFixed(1) + "%</p>");
-            // d3.select('#tooltip').classed('hidden', false);
+        .on('mouseover', function(e, d) {
+            d3.select('#tooltip')
+                .style("left", (e.pageX + 5) + "px")
+                .style("top", (e.pageY - 28) + "px")
+                .html("<p class='diff_bold'>Difference: </p><p class='difference'>" + Math.abs(parseFloat(d.perdiffMF)).toFixed(1) + "%</p><p class='diff_bold'>Males: </p><p class='difference'>" + Math.abs(parseFloat(d.perdiffMF)).toFixed(1) + "%</p><p class='diff_bold'>Females: </p><p class='difference'>" + Math.abs(parseFloat(d.perdiffMF)).toFixed(1) + "%</p>");
+            d3.select('#tooltip').classed('hidden', false);
         })
-        .on("click", function(d) {
-            // $("#textInsert").html("");
-            // $("#textInsert_names").html(d.char_list);
-            // $("#titleInsert").html(d.gen_name);
+        .on("click", function(e, d) {
+            d3.select("#textInsert").text(d.category);
+            d3.select("#titleInsert").text(d.power);
+            d3.select("#textInsert_names").text(d.definition);
             // d3.selectAll(".genDot")
             //     .style("fill", function(d) {
             //         if (d.gender == 1) {
@@ -202,7 +200,7 @@ export function hBar(data) {
         .on('mouseout', function() {
             // var section = d3.select(this);
             // section.style("opacity", '1')
-            // d3.select('#tooltip').classed('hidden', true);
+            d3.select('#tooltip').classed('hidden', true);
         });
     var ls = svg.selectAll(".labels")
         .data(data)

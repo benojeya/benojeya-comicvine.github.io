@@ -3,9 +3,9 @@ export const name = 'stackedBar';
 export function stackedBar(data) {
     let stackedBar_div = document.createDocumentFragment();
 
-    let margin = {top: 10, right: 30, bottom: 20, left: 50},
-        width = 1000 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+    let margin = {top: 10, right: 30, bottom: 40, left: 50},
+        width = 800 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
 
     let svg = d3.select(stackedBar_div)
         .append("svg")
@@ -37,28 +37,28 @@ export function stackedBar(data) {
         .domain(subgroups)
         .range(['blue','fuchsia']);
 
-    svg.append("g")
-        .selectAll("g")
-        .data(data)
-            .enter()
-            .append("g")
+    // svg.append("g")
+    //     .selectAll("g")
+    //     .data(data)
+    //         .enter()
+    //         .append("g")
 
-                .attr("transform", function(d) { return "translate(" + x(d.Range) + ",0)"; })
-                .selectAll("circle")
-                .data(function(d) {return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
-                .enter().append("circle")
-                .attr("class", "genDot")
-                .attr("r", 7)
-                .attr("cx", function(d) {
-                    return xSubgroup(d.key) + 18;
-                })
-                .attr("cy", function(d) {
-                    return y(d.value);
-                })
-                .style("opacity", 1)
-                .style("fill", function(d) {
-                    return color(d.key)
-                })
+    //             .attr("transform", function(d) { return "translate(" + x(d.Range) + ",0)"; })
+    //             .selectAll("circle")
+    //             .data(function(d) {return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
+    //             .enter().append("circle")
+    //             .attr("class", "genDot")
+    //             .attr("r", 7)
+    //             .attr("cx", function(d) {
+    //                 return xSubgroup(d.key) + 18;
+    //             })
+    //             .attr("cy", function(d) {
+    //                 return y(d.value);
+    //             })
+    //             .style("opacity", 1)
+    //             .style("fill", function(d) {
+    //                 return color(d.key)
+    //             })
     svg.append("g")
         .selectAll("g")
         .data(data)
@@ -71,12 +71,37 @@ export function stackedBar(data) {
                 .data(function(d) { return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
                 .enter().append("rect")
 
-                .attr("x", function(d) { return xSubgroup(d.key) + 17; })
+                .attr("x", function(d) { return xSubgroup(d.key); })
                 .attr("y", function(d) { return y(d.value); })
-                .attr("width", 2)
+                .attr("width", xSubgroup.bandwidth())
                 .attr("height", function(d) { return height - y(d.value); })
                 .attr("fill", function(d) { return color(d.key); })
+                .on('mouseover', function(e, d) {
+                    d3.select('#tooltip')
+                        .style("left", (e.pageX + 5) + "px")
+                        .style("top", (e.pageY - 28) + "px")
+                        .html("<p class='diff_bold'>" + d.key +  ": </p><p class='difference'>" + d.value +  " </p>");
+                    d3.select('#tooltip').classed('hidden', false);
+                })
+                .on('mouseout', function() {
+                    d3.select('#tooltip').classed('hidden', true);
+                });
   
-
+    svg.append("text")             
+        .attr("transform",
+                "translate(" + (width/2) + " ," + 
+                                (height + margin.top + 20) + ")")
+        .style("text-anchor", "middle")
+        .style("text-transform", "uppercase")
+        .style("font-family", "body")
+        .text("Date Range");
+    svg.append("text")             
+        .attr("transform",
+                "translate(-40 ," + 
+                                 (height/2) + ") rotate(-90)")
+        .style("text-anchor", "middle")
+        .style("text-transform", "uppercase")
+        .style("font-family", "body")
+        .text("No. of characters created");
     return stackedBar_div;
 }

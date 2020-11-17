@@ -163,10 +163,12 @@ footer ul  {
 }
 
 #page5 {
-    height: 220%;
+    height: 200%;
+    min-height: 1487px;
 }
 #page8 {
-    height: 370%;
+    height: 330%;
+    min-height: 2660px;
 }
 
 #page5 .page_graph_wrap {
@@ -399,4 +401,88 @@ img.displayed_still {
 
 #page5 h4 {
     margin-top: 1em;
+}
+
+#page8 .description h3 {
+    padding-bottom: 1em;
+}
+#page8 .description h4 {
+    font-size: 1.9em;
+    padding: 0 0 1em;
+}
+#page8 .description h6 {
+    font-size: 1.2em;
+    padding: 1em 0;
+    text-align-last: left;
+    text-decoration: underline;
+    text-transform: uppercase;
+    color: #fe4b03;
+}
+#page8 .description p {
+    padding: 0 0;
+}
+
+#pts_label {
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 1.4em;
+    padding: 0;
+    color: #fe4b03;
+    font-family: "heading";
+}
+.chart__labels {
+    overflow: hidden;
+    max-width: 640px;
+    margin: 0 auto 0.5rem auto;
+}
+
+#page8 .chart__labels p.label_axis {
+    font-weight: bold;
+    width: 50%;
+    float: left;
+    margin: 0;
+    text-align: center;
+    padding: 0;
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+.genDot {
+    cursor: pointer;
+}
+p.color--female {
+    color: #F012BE;
+}
+p.color--male{
+    color: #1357BE;
+}
+.diff_bold {
+    font-weight: bold;
+    clear: both;
+    padding-right: 1em;
+}
+
+.difference, .diff_bold {
+    float: left;
+    margin: 0.5em 0;
+}
+
+#textInsert {
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0 0 1em;
+}
+#page12 {
+    height: 330%;
+    min-height: 2340px;
+}
+#page12 h4 {
+    margin-top: 1em;
+}
+#page12 .page_graph_wrap {
+    max-height: 100%;
+}
+
+#page12 rect {
+    cursor: pointer;
 }
