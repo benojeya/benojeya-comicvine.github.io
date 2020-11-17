@@ -8,7 +8,6 @@ export function hBar(data) {
         g.selectAll(".tick line").attr("stroke", "#777").attr("opacity", "0");
         g.selectAll(".tick text").attr("dy", -25).attr("class", "label").attr("font-size","1.5em")
             .attr("font-family", "subHeading")
-            .attr("fill", "#fe4b03");
     }
 
     let hBar_div = document.createDocumentFragment();
