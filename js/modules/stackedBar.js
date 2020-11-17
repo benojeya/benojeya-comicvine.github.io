@@ -1,6 +1,6 @@
 export const name = 'stackedBar';
 
-export function stackedBar(data) {
+export function stackedBar(data, appFn) {
     let stackedBar_div = document.createDocumentFragment();
 
     let margin = {top: 10, right: 30, bottom: 40, left: 50},
@@ -59,6 +59,9 @@ export function stackedBar(data) {
     //             .style("fill", function(d) {
     //                 return color(d.key)
     //             })
+    // this.start = "";
+    // this.end = "";
+    // let $this = this;
     svg.append("g")
         .selectAll("g")
         .data(data)
@@ -66,6 +69,12 @@ export function stackedBar(data) {
             .append("g")
 
                 .attr("transform", function(d) { return "translate(" + x(d.Range) + ",0)"; })
+                .on("click", function (e, d) {
+                    let r = d.Range.split(" ");
+                    // $this.start = parseInt(r[0])
+                    // $this.end = parseInt(r[2])
+                    appFn(parseInt(r[0]), parseInt(r[2]))
+                })
 
                 .selectAll("rect")
                 .data(function(d) { return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
@@ -103,5 +112,9 @@ export function stackedBar(data) {
         .style("text-transform", "uppercase")
         .style("font-family", "body")
         .text("No. of characters created");
-    return stackedBar_div;
+    // return {
+    //     div: stackedBar_div,
+    //     bars: bars
+    // };
+    return stackedBar_div
 }

@@ -102,13 +102,28 @@ function debounce(func, wait, immediate) {
 
 function scrolling(e) {
     let page3 = document.getElementById("page3"),
+        page5 = document.getElementById("page5"),
+        page8 = document.getElementById("page8"),
         page12 = document.getElementById("page12"),
         pos1 = findPos(page3) - 100,
         pos2 = findPos(page12),
+        pos3 = findPos(page8)[0],
+        pos4 = findPos(page5)[0],
         top = window.pageYOffset,
         bottom = window.pageYOffset + window.innerHeight;
+        
+    if(top >= pos4 + page5.offsetHeight) {
+        d3.select("#titleInsert").text("Do you want to understand the powers?");
+        d3.select("#textInsert").text(" ");
+        d3.select("#textInsert_names").text("Click on a circle and I‘ll tell ya what it means!");
+    } else {
+        d3.select("#titleInsert").text("DO you want the names?");
+        d3.select("#textInsert").text(" ");
+        d3.select("#textInsert_names").text("Click on a circle and I‘ll list gender-titled characters!");
+    }
     if(top >= pos1 && bottom <= pos2) {
         d3.select("#stick2").style("transform", "translate(0, 0)")
+        
     } else {
         d3.select("#stick2").style("transform", "translate(-120%, 0)")
     }
@@ -288,6 +303,8 @@ window.onload = init;
 //     document.getElementById("funnel_genderedNames").appendChild(funnel_genderedNames);
 // });
 
+let brushing_genderedPowers_dc,
+    brushing_genderedPowers_marvel;
 d3.csv('assets/data/gendered_powers.csv').then(function (data) {
     // bar chart for gendered powers
     let hBar_genderedPowers = hBar(data);
@@ -296,22 +313,33 @@ d3.csv('assets/data/gendered_powers.csv').then(function (data) {
 
 d3.csv('assets/data/gendered_year_range_marvel.csv').then(function (data) {
     // stacked bar chart for year of appearance
-    let hBar_genderedPowers_range_marvel = stackedBar(data);
-    document.getElementById("hBar_genderedPowers_range_marvel").appendChild(hBar_genderedPowers_range_marvel);
+    d3.csv('assets/data/gendered_year_marvel.csv').then(function (sdata) {
+        let hBar_genderedPowers_range_marvel = stackedBar(data, function (s, e) {
+            brushing_genderedPowers_marvel.brushend({
+                rangeStart: s,
+                rangeEnd: e
+            })
+        });
+        document.getElementById("hBar_genderedPowers_range_marvel").appendChild(hBar_genderedPowers_range_marvel);
+
+    
+        brushing_genderedPowers_marvel = brushing(sdata);
+        document.getElementById("brushing_genderedPowers_marvel").appendChild(brushing_genderedPowers_marvel.div);
+    });
 });
 d3.csv('assets/data/gendered_year_range_dc.csv').then(function (data) {
     // stacked bar chart for year of appearance
-    let hBar_genderedPowers_range_dc = stackedBar(data);
-    document.getElementById("hBar_genderedPowers_range_dc").appendChild(hBar_genderedPowers_range_dc);
-});
+    d3.csv('assets/data/gendered_year_dc.csv').then(function (sdata) {
+        let hBar_genderedPowers_range_dc = stackedBar(data, function (s, e) {
+            brushing_genderedPowers_dc.brushend({
+                rangeStart: s,
+                rangeEnd: e
+            })
+        });
+        document.getElementById("hBar_genderedPowers_range_dc").appendChild(hBar_genderedPowers_range_dc);
 
-
-d3.csv('assets/data/gendered_year_dc.csv').then(function (data) {
-    let brushing_genderedPowers_dc = brushing(data);
-    document.getElementById("brushing_genderedPowers_dc").appendChild(brushing_genderedPowers_dc);
-});
-
-d3.csv('assets/data/gendered_year_marvel.csv').then(function (data) {
-    let brushing_genderedPowers_marvel = brushing(data);
-    document.getElementById("brushing_genderedPowers_marvel").appendChild(brushing_genderedPowers_marvel);
+        brushing_genderedPowers_dc = brushing(sdata);
+        document.getElementById("brushing_genderedPowers_dc").appendChild(brushing_genderedPowers_dc.div);
+        
+    });
 });

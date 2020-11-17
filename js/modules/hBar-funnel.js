@@ -178,8 +178,8 @@ export function hBar(data) {
             d3.select('#tooltip').classed('hidden', false);
         })
         .on("click", function(e, d) {
-            d3.select("#textInsert").text(d.category);
-            d3.select("#titleInsert").text(d.power);
+            d3.select("#titleInsert").text(d.category);
+            d3.select("#textInsert").text(d.power);
             d3.select("#textInsert_names").text(d.definition);
             // d3.selectAll(".genDot")
             //     .style("fill", function(d) {
@@ -247,8 +247,9 @@ export function hBar(data) {
             // d3.select('#tooltip').classed('hidden', false);
         })
         .on("click", function(d) {
-            // $("#textInsert_powers").html(d.definition)
-            // $("#titleInsert_powers").html(d.power);
+            // $("#titleInsert").html(d.definition)
+            // $("#textInsert").html("")
+            // $("#textInsert_names").html(d.power);
         })
         .on('mouseout', function() {
             // d3.select('#tooltip').classed('hidden', true);

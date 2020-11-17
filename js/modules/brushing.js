@@ -1,7 +1,7 @@
 export const name = 'brushing';
 
 export function brushing(data) {
-    
+   
     let brushed_div = document.createDocumentFragment();
 
     let margin = {top: 10, right: 40, bottom: 50, left: 60},
@@ -217,18 +217,28 @@ export function brushing(data) {
             end,
             brushExtent = e.selection,
             nData = [...data];
-        selected  = x0.domain()
-            .filter(function(d) {
-                if ((brushExtent[0] <= x0(d)) && (x0(d) <= brushExtent[1])) {
-                    if(!start)  start = d;
-                    end = (parseInt(d) - 1).toString();
-                    return true;
-                }
-            });
-
-         nData = nData.filter(function (v, k) {
+        if(e.rangeStart) {
+            start = e.rangeStart;
+            end = e.rangeEnd;
+            selected  = x0.domain()
+                .filter(function(d) {
+                    return (parseInt(d) >= start && parseInt(d) <=end) 
+                });
+        } else {
+            selected  = x0.domain()
+                .filter(function(d) {
+                    if ((brushExtent[0] <= x0(d)) && (x0(d) <= brushExtent[1])) {
+                        if(!start)  start = d;
+                        end = (parseInt(d) - 1).toString();
+                        return true;
+                    }
+                });
+        }
+        console.log(selected)
+        nData = nData.filter(function (v, k) {
             return (selected.indexOf(v.Year) != -1) ;
         });
+
         
         var ux0 = d3.scaleBand()
             .rangeRound([0, width])
@@ -238,15 +248,17 @@ export function brushing(data) {
             .rangeRound([0, width])
             .padding(0.05);
 
+        var maxM = d3.max(nData, function(d) { return +d.Male ;} );
+
         var uy = d3.scaleLinear()
-            .domain([0, d3.max(nData, function(d) { return +d.Male ;} )])
+            .domain([0, maxM])
             .range([ height, 0 ]);
 
 
         
         ux0.domain(nData.map(function(d) { return d.Year; }));
         ux1.domain(keys).range([0, ux0.bandwidth()]);
-        uy.domain([0, d3.max(nData, function(d) { return +d.Male ;} )])
+        uy.domain([0, maxM])
         svg.selectAll(".yAxis")
             .call(d3.axisLeft(uy));
         svg.selectAll(".xAxis")
@@ -262,7 +274,6 @@ export function brushing(data) {
             .transition()
             .call(d3.axisLeft(uy))
             .duration(500);
-       
             
         var bars = svg.selectAll(".bar").selectAll("rect")
           .data(function(d) { 
@@ -280,7 +291,7 @@ export function brushing(data) {
             .attr("width",0)     
             .attr("y", function(d) { return height; })
             .duration(500);
-   
+            
         bars.filter(function(d, i) {
             return (selected.indexOf(d.Year) != -1) ;
           })
@@ -302,5 +313,8 @@ export function brushing(data) {
 
          
     }
-    return brushed_div;
+    return {
+        div: brushed_div,
+        brushend: brushend
+    };
 }
