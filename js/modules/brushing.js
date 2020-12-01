@@ -6,11 +6,11 @@ export function brushing(data) {
 
     let margin = {top: 10, right: 40, bottom: 50, left: 60},
         width = 1110 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        height = 380 - margin.top - margin.bottom;
 
     let margin2 = {top: 20, right: 40, bottom: 10, left: 50},
         width2 = 1100 - margin2.left - margin2.right,
-        height2 = 95 - margin2.top - margin2.bottom;
+        height2 = 90 - margin2.top - margin2.bottom;
         
     let svg = d3.select(brushed_div)
         .append("svg")
@@ -42,7 +42,7 @@ export function brushing(data) {
         .range([ height2, 0 ]);
         
     var z = d3.scaleOrdinal()
-        .range(["#1357BE", "#F012BE"]);
+        .range(["#F012BE", "#1357BE"]);
 
     var keys = data.columns.slice(1);
     let brush = d3.brushX()
@@ -62,13 +62,23 @@ export function brushing(data) {
         .attr("class","bar")
         .attr("transform", function(d) { return "translate(" + x0(d.Year) + ",0)"; })
         .selectAll("rect")
-        .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
+        .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key], Year: d.Year}; }); })
         .enter().append("rect")
         .attr("x", function(d) { return x1(d.key); })
         .attr("y", function(d) { return y(d.value); })
         .attr("width", x1.bandwidth())
         .attr("height", function(d) { return height - y(d.value);  })
-        .attr("fill", function(d) { return z(d.key); });
+        .attr("fill", function(d) { return z(d.key); })
+        .on('mouseover', function(e, d) {
+            d3.select('#tooltip')
+                .style("left", (e.pageX + 5) + "px")
+                .style("top", (e.pageY - 28) + "px")
+                .html("<p class='diff_bold'>Year: </p><p class='difference'>" + d.Year +  " </p>" + "<p class='diff_bold'>" + d.key +  ": </p><p class='difference'>" + d.value +  " </p>");
+            d3.select('#tooltip').classed('hidden', false);
+        })
+        .on('mouseout', function() {
+            d3.select('#tooltip').classed('hidden', true);
+        });
 
     g2.append("g")
         .selectAll("g")
@@ -97,7 +107,7 @@ export function brushing(data) {
         .attr("x", 20)
         .attr("dy", 3)
         .attr("dx", -10)
-        .attr("transform", "rotate(90)")
+        .attr("transform", "rotate(45)")
         .style("text-anchor", "start");
     svg.append("g")
         .attr("class", "yAxis")
@@ -245,7 +255,6 @@ export function brushing(data) {
         
         var ux1 = d3.scaleBand()
             .rangeRound([0, width])
-            .padding(0.05);
 
         var maxM = d3.max(nData, function(d) { return +d.Male ;} );
 
@@ -267,7 +276,7 @@ export function brushing(data) {
             .attr("x", 20)
             .attr("dy", 3)
             .attr("dx", -10)
-            .attr("transform", "rotate(90)")
+            .attr("transform", "rotate(45)")
             .style("text-anchor", "start");
         svg.select(".y")
             .transition()
@@ -278,36 +287,36 @@ export function brushing(data) {
           .data(function(d) { 
               return keys.map(function(key) { return {key: key, value: d[key], Year: d.Year}; }); 
             })
+            .attr("height",0)
+            .attr("y", height )
         
         bars.filter(function(d, i) {
                 return (selected.indexOf(d.Year) == -1) ;
             })
-            .transition()
             .attr("x", function(d) {
                 return (+d3.select(this).attr("x")) + (+d3.select(this).attr("width"))/2;  
             })
             .attr("height",0)
-            .attr("width",0)     
+            .attr("width",0)  
             .attr("y", function(d) { return height; })
-            .duration(500);
             
         bars.filter(function(d, i) {
             return (selected.indexOf(d.Year) != -1) ;
           })
-            .transition()
             // .attr("x", function(d) {
             //     return (+d3.select(this).attr("x")) + (+d3.select(this).attr("width"));  
             // })
             .attr("x", function(d, i) {
                 var style = window.getComputedStyle(this.parentNode);
                 var matrix = new WebKitCSSMatrix(style.transform);
-                if (d.key == "Female") return ux0(d.Year) - matrix.m41 + ux1.bandwidth(); 
+                if (d.key == "Male") return ux0(d.Year) - matrix.m41 + ux1.bandwidth(); 
                 return ux0(d.Year) - matrix.m41; 
             })
-            .attr("y", function(d) { return uy(d.value); })
-            .attr("height", function(d) { return height - uy(d.value); })
             .attr("width", ux1.bandwidth())
             .attr("fill", function(d) { return z(d.key); })
+            .transition()
+            .attr("y", function(d) { return uy(d.value); })
+            .attr("height", function(d) { return height - uy(d.value); })
             .duration(500);
 
          

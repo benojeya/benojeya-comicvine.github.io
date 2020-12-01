@@ -260,20 +260,20 @@ export function funnel(data) {
        y.domain(data.map(function(d) { return d.gen_cat; }));
  
  
-       d3.selectAll('.genDot') // move the circles
+       svg.selectAll('.genDot') // move the circles
            .transition().duration(500)
            .attr("cx", function(d) { return x(d.gen_per); })
            .attr("cy", function(d) { return y(d.gen_cat); });
  
  
-       d3.selectAll('.dodo')
+       svg.selectAll('.dodo')
            .transition().duration(500)
            .attr("y", function(d) {
              if (d.gen_per <=0){return y(d.gen_cat)+4}
                 else {return y(d.gen_cat)+4}
             });
  
-       d3.selectAll(".between")
+       svg.selectAll(".between")
          .transition().duration(500)
          .attr("x1", function(d){return x(d.gen_per)})
          .attr("y1", function(d){return y(d.gen_cat)})
@@ -293,19 +293,19 @@ export function funnel(data) {
  
        y.domain(data.map(function(d) { return d.gen_cat; }));
  
-      d3.selectAll('.genDot') // move the circles
+      svg.selectAll('.genDot') // move the circles
          .transition().duration(500)
          .attr("cx", function(d) { return x(d.gen_per); })
          .attr("cy", function(d) { return y(d.gen_cat); });
  
-       d3.selectAll('.dodo')
+       svg.selectAll('.dodo')
            .transition().duration(500)
            .attr("y", function(d) {
              if (d.gen_per <=0){return y(d.gen_cat)+4}
              else {return y(d.gen_cat)+4}
             });
  
-       d3.selectAll(".between")
+       svg.selectAll(".between")
          .data(data)
          .transition().duration(500)
          .attr("x1", function(d){return x(d.gen_per)})

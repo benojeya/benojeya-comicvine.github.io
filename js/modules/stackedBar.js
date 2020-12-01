@@ -23,7 +23,6 @@ export function stackedBar(data, appFn) {
     var xSubgroup = d3.scaleBand()
         .domain(subgroups)
         .range([0, x.bandwidth()])
-        .padding([0.05])
     var y = d3.scaleLinear()
         .domain([0, d3.max(data, function(d) { return +d.Male ;} )])
         .range([ height, 0 ]);
@@ -35,7 +34,7 @@ export function stackedBar(data, appFn) {
     
     var color = d3.scaleOrdinal()
         .domain(subgroups)
-        .range(['blue','fuchsia']);
+        .range(['#F012BE', '#1357BE']);
 
     // svg.append("g")
     //     .selectAll("g")

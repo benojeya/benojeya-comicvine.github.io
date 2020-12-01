@@ -68,6 +68,8 @@ function init () {
         //     })
         let funnel_genderedNames = funnel(data);
         document.getElementById("funnel_genderedNames").appendChild(funnel_genderedNames);
+
+       
     });
     // window.onwheel =  throttle(function(e) {
     //     scroll.call(this, [e]);
