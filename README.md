@@ -1,7 +1,7 @@
 ## Gender Representation in Comic Books
 
 ### Project Link
-[Visualizing Gender Representation in Comic Books](https://benojeyacomicvine.github.io/)
+[Visualizing Gender Representation in Comic Books](https://benojeyacomicvine.github.io/) 
 
 #### Project for the class CS 7450 Fall 2020 at Georgia Institute of Technology with Prof. Alex Endert. 
 
